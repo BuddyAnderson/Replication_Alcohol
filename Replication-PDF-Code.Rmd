@@ -1,0 +1,108 @@
+---
+title: 'Quasi-Replication of "Alcohol and Self-Control: A Field Experiment in India"'
+author: "Buddy Anderson"
+date: "12/3/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<!-- For your info, you can RUN CODE before knitting so as to see what will appear within the text. This -->
+<!-- feature is insanely useful and I did not realize I could do it. -->
+
+## Replication Paper
+The paper partially replicated in what follows is Frank Schilbach's *Alcohol and Self-Control: A Field Experiment in India*. As I am interested in experimental economics, particularly field experiements, this was an excellent learning opportunity for a multitude of reasons. For one, I learned a little about STATA. My experience with coding in general has been limited up to this point so exposure to a new language is always valuable, particularly a language that is widely used in academia. Secondly, I learned a little more about R than I previously knew. And arguably most importantly, I disected an experiment and attempted to follow the reasoning of a practiced experimental economist so as to better understand what it is I might be doing for my dissertation.
+
+## An experience with STATA
+
+- After finding an interesting paper I needed to make sure I could actually run their code
+- I went through the process of running their code, which took a great deal longer than anticipated as I had to repeatedly alter certain aspects or install packages before the code would actually run without error
+- For example:
+```{r out.width='70%', out.height='70%', fig.align='center',echo=FALSE}
+library(png)
+library(grid)
+f1 <- readPNG("Images/stata1.png")
+ grid.raster(f1)
+```
+
+## Replicating STATA
+- After successfully running the STATA code and generating the same figures and tables the authors used in their paper I shifted to replicating some of their results
+- Of primary interest was graphical replication as those are the things that normally stick in your mind from a study
+- The following few slides compare and contrast figures that I was able to reproduce with some level of success
+
+# Now with R
+
+## First, let's source the code from a seprate script
+- The following graph was called from a script that is part of this project, but not part of the Rmarkdown document
+- This is an extremely useful reference tool for future projects requiring real time updating with data!!!
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, out.width="49%", out.height="40%", fig.cap="Graph Generated in Seprate Script"}
+source("Figure 3_Panel A_Replication.R", local = knitr::knit_global())
+p
+```
+
+## Now compare to original
+- These graphs are fairly similar, but certainly more could be done to make them closer to identical
+
+```{r, echo=FALSE,out.width="49%", out.height="40%",fig.cap="Comparrison of Figure 3, Panel A",fig.show='hold',fig.align='center'}
+ knitr::include_graphics(c("Images/OriginalFig3.png","Images/RepFig3.png"))
+``` 
+
+
+## Let's do the same type of thing with Table 3 
+Just kidding, this was advised against. We'll circle back if we have time.
+
+\pagebreak
+## Instead, lets consider an extension
+- Maybe the results are being driven by heavy drinkers
+- For instance, if you look at a simple histogram of the typical amount of drinks had by subjects...
+
+```{r, echo=FALSE, fig.align='center', fig.cap="Histogram of Daily Standard Drinks", message=FALSE, warning=FALSE, out.height="40%", out.width="49%"}
+source("Figure 3_Panel A_Replication.R", local = knitr::knit_global())
+hist(ndt$Std_drinks_overall_BL)
+```
+- ... you can see that a substantial portion of the subjects drink 7 or more drinks daily
+- So what happens if we look at heterogeneous effects of "heavy" drinkers as oppsed to all others?
+
+\pagebreak
+
+## Heavy Drinkers vs. Others
+- We define heavy drinkers as individuals that reported drinking more than 6 drinks each day
+- In what follows we report the results of the same regression performed with data containing only heavy drinkers and data containing only non-heavy drinkers
+
+## Model 1
+- The results of Table 1 come from the following model
+\[Insert \; Model \; Here\]
+- The data for this model contain only observations for heavy drinking individuals
+- There are no controls here as we simply wanted to develop a working code and then make improvements to the model as to better approximate the effects of each predictor
+
+```{r, echo=FALSE, results='asis', message=FALSE}
+source("heterogeneous effects.R")
+library(stargazer)
+stargazer(lm1, lm2, lm3, type = "latex", title = "Heavy Drinkers", header = F
+          , covariate.labels = c("Incentives", "Choice", "Control", "Constant")
+          , dep.var.caption  = ""
+          , dep.var.labels = c("Sober at Office", "BAC", "Number of Drinks"))
+```
+
+\pagebreak
+
+## Model 2
+- The results of Table 2 come from a second model
+\[Insert \; Model \; Here\]
+- The data for this model contain only observations for non-heavy drinkers
+```{r, echo=FALSE, results='asis', message=FALSE}
+source("heterogeneous effects.R")
+library(stargazer)
+stargazer(lm4, lm5, lm6, type = "latex", title = "Non-heavy Drinkers", header = F
+          , covariate.labels = c("Incentives", "Choice", "Control", "Constant")
+          , dep.var.caption  = ""
+          , dep.var.labels = c("Sober at Office", "BAC", "Number of Drinks"))
+```
+
+
+
+
+
