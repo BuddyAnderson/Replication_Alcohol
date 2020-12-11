@@ -63,6 +63,18 @@ Just kidding, this was advised against. We'll circle back if we have time.
 source("Figure 3_Panel A_Replication.R", local = knitr::knit_global())
 hist(ndt$Std_drinks_overall_BL)
 ```
+- ... you can see that a substantial portion of the subjects drink 7 or more drinks daily
+- So what happens if we look at heterogeneous effects of "heavy" drinkers as oppsed to all others?
 
 
+## Heavy Drinkers vs. Others
+- We define heavy drinkers as those that reported drinking more than 6 drinks each day
+
+## Table...
+```{r, echo=FALSE, results='asis', message=FALSE}
+source("heterogeneous effects.R")
+library(stargazer)
+stargazer(lm1, lm2, lm3, type = "latex", title = "Regression Results", header = F)
+stargazer(lm4, lm5, lm6, type = "latex", title = "Regression Results", header = F)
+```
 
