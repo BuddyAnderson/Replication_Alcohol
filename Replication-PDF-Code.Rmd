@@ -50,11 +50,11 @@ p
  knitr::include_graphics(c("Images/OriginalFig3.png","Images/RepFig3.png"))
 ``` 
 
-
 ## Let's do the same type of thing with Table 3 
 Just kidding, this was advised against. We'll circle back if we have time.
 
 \pagebreak
+
 ## Instead, lets consider an extension
 - Maybe the results are being driven by heavy drinkers
 - For instance, if you look at a simple histogram of the typical amount of drinks had by subjects...
@@ -101,8 +101,6 @@ stargazer(lm4, lm5, lm6, type = "latex", title = "Non-heavy Drinkers", header = 
           , dep.var.caption  = ""
           , dep.var.labels = c("Sober at Office", "BAC", "Number of Drinks"))
 ```
-
-
 
 
 
